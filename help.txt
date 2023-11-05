@@ -1,0 +1,16 @@
+Search something
+http://localhost:3000/search?string=tatoo
+
+
+
+Filter something
+post body example ->
+{
+  "planet": "Tatooine",
+  "film": "A New Hope",
+  "species": "Human"
+}
+
+
+Get data
+http://localhost:3000/sw?page=3
