@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const filterRouter = require('./routes/filter')
 const searchRouter = require('./routes/search')
 const swRouter = require('./routes/sw')
