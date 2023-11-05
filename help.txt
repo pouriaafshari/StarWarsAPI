@@ -1,8 +1,7 @@
 Search something
 http://localhost:3000/search?string=tatoo
 
-
-
+http://localhost:3000/filter?string=tatoo
 Filter something
 post body example ->
 {
