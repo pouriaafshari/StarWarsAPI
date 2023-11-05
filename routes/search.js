@@ -29,26 +29,16 @@ router.get('/', (req, res) => {
 
   const pageSize = 10;
   const totalPages = Math.ceil(matchingCharacters.length / pageSize);
+  const pages = [];
 
-  const page = parseInt(req.query.page) || 1;
-  if (page < 1 || page > totalPages) {
-    return res.status(400).json({ message: `Invalid page number. The valid range is 1 to ${totalPages}.` });
+  for (let page = 1; page <= totalPages; page++) {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, matchingCharacters.length);
+    const pageData = matchingCharacters.slice(startIndex, endIndex);
+    pages.push(pageData);
   }
 
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = Math.min(startIndex + pageSize, matchingCharacters.length);
-
-  const pageData = matchingCharacters.slice(startIndex, endIndex);
-
-  if (pageData.length === 0 || pageData.length < pageSize) {
-    return res.json(pageData);
-  }
-
-  return res.json({
-    page: page,
-    totalPages: totalPages,
-    characters: pageData,
-  });
+  return res.json(pages);
 });
 
 module.exports = router;
