@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const People = require('./Json/people.json');
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   const searchString = req.query.string;
   const matchingCharacters = [];
 
