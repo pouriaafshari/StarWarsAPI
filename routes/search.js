@@ -4,6 +4,7 @@ const People = require('./Json/people.json');
 
 router.get('/', (req, res) => {
   const searchString = req.query.string;
+  const searchPage = req.query.page;
   const matchingCharacters = [];
 
   if (!searchString) {
@@ -27,8 +28,7 @@ router.get('/', (req, res) => {
   const pageSize = 10;
   const totalPages = Math.ceil(matchingCharacters.length / pageSize);
   const pages = [];
-  let count = matchingCharacters.length
-  pages.push({"Count": count})
+  let count = matchingCharacters.length;
 
   for (let page = 1; page <= totalPages; page++) {
     const startIndex = (page - 1) * pageSize;
@@ -37,7 +37,12 @@ router.get('/', (req, res) => {
     pages.push(pageData);
   }
 
-  return res.json(pages);
+  const thePage = {
+    count: count,
+    result: pages[searchPage - 1]
+  };
+
+  return res.json(thePage);
 });
 
 module.exports = router;

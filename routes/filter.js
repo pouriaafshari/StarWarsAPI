@@ -1,10 +1,72 @@
 const express = require('express');
 const router = express.Router();
 const People = require('./Json/people.json');
+const fs = require('fs');
 const Films = require('./Json/films.json')
 
 router.get('/', (req, res) => {
   const { planet, species, film } = req.query;
+  const searchPage = req.query.page;
+
+  if (planet === "") {
+
+    // Extract all the homeworlds
+    const homeworlds = {};
+    for (const character of People) {
+      const homeworld = character.homeworld;
+      if (!homeworlds[homeworld]) {
+        homeworlds[homeworld] = 1;
+      } else {
+        homeworlds[homeworld]++;
+      }
+    }
+
+    // Create an object to send as a response
+    const responseObj = {
+      message: "Homeworlds of Star Wars Characters",
+      homeworlds: homeworlds,
+    };
+
+    return res.json(responseObj);
+  }
+
+  else if (species === "") {
+    // Extract and count the species
+    const speciesCount = {};
+
+    for (const character of People) {
+      const characterSpecies = character.species;
+      if (characterSpecies) {
+        speciesCount[characterSpecies] = (speciesCount[characterSpecies] || 0) + 1;
+      }
+    }
+
+    // Create an object to send as a response
+    const responseObj = {
+      message: "Species of Star Wars Characters",
+      speciesCount: speciesCount,
+    };
+
+    return res.json(responseObj);
+  }
+
+  else if (film === "") {
+    const FilmsArray = [];
+  
+    for (const film of Films) {
+      FilmsArray.push(film.fields.title);
+    }
+  
+    // Create an object to send as a response
+    const responseObj = {
+      message: "Star Wars Films",
+      films: FilmsArray,
+    };
+  
+    return res.json(responseObj);
+  }
+
+
   let matchingPeople = [...People];
 
   if (planet) {
@@ -41,8 +103,7 @@ router.get('/', (req, res) => {
   const pageSize = 10;
   const totalPages = Math.ceil(matchingPeople.length / pageSize);
   const pages = [];
-  let count = matchingPeople.length
-  pages.push({"Count": count})
+  let count = matchingPeople.length;
 
   for (let page = 1; page <= totalPages; page++) {
     const startIndex = (page - 1) * pageSize;
@@ -51,7 +112,12 @@ router.get('/', (req, res) => {
     pages.push(pageData);
   }
 
-  return res.json(pages);
+  const thePage = {
+    count: count,
+    result: pages[searchPage - 1]
+  };
+
+  return res.json(thePage);
 });
 
 module.exports = router;
