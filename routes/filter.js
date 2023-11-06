@@ -41,7 +41,8 @@ router.get('/', (req, res) => {
   const pageSize = 10;
   const totalPages = Math.ceil(matchingPeople.length / pageSize);
   const pages = [];
-  pages.push({"AllPages": totalPages})
+  let count = matchingPeople.length
+  pages.push({"Count": count})
 
   for (let page = 1; page <= totalPages; page++) {
     const startIndex = (page - 1) * pageSize;
