@@ -7,9 +7,6 @@ router.get('/', (req, res) => {
   const searchPage = req.query.page;
   const matchingCharacters = [];
 
-  if (!searchString) {
-    return res.status(400).json({ message: 'Please provide a search string in the "string" parameter.' });
-  }
 
   const searchStringLower = searchString.toLowerCase();
 
