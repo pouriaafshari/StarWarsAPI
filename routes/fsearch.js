@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const People = require('./Json/people.json');
+const Films = require('./Json/films.json')
 
 router.get('/', (req, res) => {
-  const searchString = req.query.string;
+  const searchString = req.query.name;
   const searchPage = req.query.page;
   const { planet, species, film } = req.query;
   const matchingCharacters = [];
