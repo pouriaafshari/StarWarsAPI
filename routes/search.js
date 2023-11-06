@@ -14,10 +14,7 @@ router.get('/', (req, res) => {
 
   People.forEach((person) => {
     if (
-      person.name.toLowerCase().includes(searchStringLower) ||
-      (typeof person.homeworld === 'string' && person.homeworld.toLowerCase().includes(searchStringLower)) ||
-      (person.bornlocation && person.bornlocation.toLowerCase().includes(searchStringLower)) ||
-      person.species.toLowerCase().includes(searchStringLower)
+      person.name.toLowerCase().includes(searchStringLower)
     ) {
       matchingCharacters.push(person);
     }
@@ -30,6 +27,7 @@ router.get('/', (req, res) => {
   const pageSize = 10;
   const totalPages = Math.ceil(matchingCharacters.length / pageSize);
   const pages = [];
+  pages.push({"AllPages": totalPages})
 
   for (let page = 1; page <= totalPages; page++) {
     const startIndex = (page - 1) * pageSize;
