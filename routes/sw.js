@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const People = require('./Json/people.json');
 
-router.get('/', (req, res) => {
+router.get('/', (req, res) => { 
   const page = parseInt(req.query.page);
   const itemsPerPage = 10; // Number of items to return per page
   const totalCharacters = People.length;
