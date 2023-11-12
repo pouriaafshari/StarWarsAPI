@@ -3,7 +3,7 @@ const router = express.Router();
 const People = require('./Json/people.json');
 
 router.get('/', (req, res) => {
-  const searchString = req.query.string;
+  const searchString = req.query.name;
   const searchPage = req.query.page;
   const matchingCharacters = [];
 
