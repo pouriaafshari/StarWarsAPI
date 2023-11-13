@@ -8,3 +8,4 @@ http://localhost:3000/filter?species=a new hope
 
 Get data
 http://localhost:3000/sw?page=3
+yes
